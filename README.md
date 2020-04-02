@@ -10,7 +10,7 @@ This plugin maintains a seperation between your local Fish shell configuration a
 
 ## Fish Shell Remote Host Configuration
 
-Place the configuration files you want transfered to the remote host in `~/.xxh/.xxh/config/xxh-plugin-fish-userconfig/` on your local computer. The files in this folder are the same as you would place in the `~/.config/fish/` directory.
+Place the configuration files you want transfered to the remote host in `~/.xxh/.xxh/config/xxh-plugin-fish-userconfig/fish` on your local computer. The files in this folder are the same as you would place in the `~/.config/fish/` directory for your local Fish shell installation.
 
 You can create directories for `functions`, `completions`, and program configuration `conf.d`. These directories and their contents will be transfered to the remote host. They will be copied into the xxh Fish shell's configuration directory.
 
