@@ -15,6 +15,18 @@ Place the configuration files you want transfered to the remote host in `~/.xxh/
 You can create directories for `functions`, `completions`, and program configuration `conf.d`. These directories and their contents will be transfered to the remote host. They will be copied into the xxh Fish shell's configuration directory.
 
 ## Install
+First create the folder for userconfigs:
+
+```bash
+mkdir -p ~/.xxh/.xxh/config/xxh-plugin-fish-userconfig/fish
+```
+
+Edit your files at the directory created in the previous step. For example:
+
+```bash
+echo "edc/bass" > ~/.xxh/.xxh/config/xxh-plugin-fish-userconfig/fish/fishfile
+```
+
 Install from xxh repository:
 
 ```bash
