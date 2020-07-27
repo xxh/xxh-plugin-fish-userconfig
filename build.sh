@@ -54,7 +54,7 @@ if [ ! -d $HOME/.xxh/.xxh/config/xxh-plugin-fish-userconfig/fish ]; then
 fi
 
 # Copy files to the build directory that will be uploaded to remote hosts.
-for filestocopy in pluginrc.fish
+for filestocopy in 010-pluginrc.fish
 do
   for found in $(find "$filestocopy" -depth -print)
   do
