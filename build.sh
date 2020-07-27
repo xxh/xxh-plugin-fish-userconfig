@@ -60,6 +60,9 @@ do
   do
     if [ -f "$found" ]; then
       founddirectory=$(dirname "$found")
+      if [ "$founddirectory" == "." ]; then
+        founddirectory=""
+      fi
       mkdirifnotfound
       cp -r "$found" "$build_dir"
     else
@@ -70,8 +73,21 @@ done
 
 # Copy files from the user's remote Fish configuration directory to the
 # build directory that will be uploaded to remote hosts.
-cd "$HOME/.xxh/.xxh/config/xxh-plugin-fish-userconfig/"
-for f in fish
+userconfigfiles="$HOME/.xxh/.xxh/config/xxh-plugin-fish-userconfig"
+cd $userconfigfiles
+for filestocopy in fish
 do
-     find "$f" -depth -print | cpio --quiet -pd "$build_dir"
+  for found in $(find "$filestocopy" -depth -print)
+  do
+    if [ -f "$found" ]; then
+      founddirectory=$(dirname "$found")
+      if [ "$founddirectory" == "." ]; then
+        founddirectory=""
+      fi
+      mkdirifnotfound
+      cp "$userconfigfiles/$found" "$build_dir/$founddirectory/"
+    else
+      mkdirifnotfound
+    fi
+  done
 done
