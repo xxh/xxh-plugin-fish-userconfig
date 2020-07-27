@@ -37,23 +37,39 @@ cyan=$esc_seq"36;40;01m"
 }
 loadcolor
 
+# Makes a directory if it is not found.
+function mkdirifnotfound(){
+  mkdir -p "$build_dir/$founddirectory"
+}
+
 # Clean build directory before building.
 rm -rf $build_dir
 mkdir -p "$build_dir/"
 
+# Check if there are any configuration files to copy to the remote host, if not inform the user.
 if [ ! -d $HOME/.xxh/.xxh/config/xxh-plugin-fish-userconfig/fish ]; then
   echo -e "${yellow}>>> ${red}Warning: There is not much point to using the xxh-plugin-fish-userconfig plugin if there is no configuration to copy to the remote host.${NC}"
   echo -e "${yellow}>>> ${red}Please add some configuration in ~/.xxh/.xxh/config/xxh-plugin-fish-userconfig/fish to be transfered to the remote hosts.${NC}"
   exit
 fi
 
-# Copy files to the build directory.
-for f in pluginrc.fish
+# Copy files to the build directory that will be uploaded to remote hosts.
+for filestocopy in pluginrc.fish
 do
-     find "$f" -depth -print | cpio --quiet -pd "$build_dir"
+  for found in $(find "$filestocopy" -depth -print)
+  do
+    if [ -f "$found" ]; then
+      founddirectory=$(dirname "$found")
+      mkdirifnotfound
+      cp -r "$found" "$build_dir"
+    else
+      mkdirifnotfound
+    fi
+  done
 done
 
-# Copy files to the build directory that will be uploaded to remote hosts.
+# Copy files from the user's remote Fish configuration directory to the
+# build directory that will be uploaded to remote hosts.
 cd "$HOME/.xxh/.xxh/config/xxh-plugin-fish-userconfig/"
 for f in fish
 do
